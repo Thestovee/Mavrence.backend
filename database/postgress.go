@@ -3,6 +3,7 @@ package database
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -10,22 +11,21 @@ import (
 func DatabaseInit() (*pgxpool.Pool, error) {
 	ctx := context.Background()
 
-	//// Read connection string components from environment variables
-	//dbHost := os.Getenv("DB_HOST")
-	//dbPort := os.Getenv("DB_PORT")
-	//dbUser := os.Getenv("DB_USER")
-	//dbPass := os.Getenv("DB_PASSWORD")
-	//dbName := os.Getenv("DB_NAME")
-	//
-	//if dbHost == "" || dbPort == "" || dbUser == "" || dbPass == "" || dbName == "" {
-	//	return nil, fmt.Errorf("database environment variables (DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME) must be set")
-	//}
-	//
-	//// Construct the connection string dynamically
-	//connStr := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
-	//	dbUser, dbPass, dbHost, dbPort, dbName)
+	// Read connection string components from environment variables
+	dbHost := os.Getenv("DB_HOST")
+	dbPort := os.Getenv("DB_PORT")
+	dbUser := os.Getenv("DB_USER")
+	dbPass := os.Getenv("DB_PASSWORD")
+	dbName := os.Getenv("DB_NAME")
 
-	connStr := fmt.Sprintf("postgres://lox:assfuck@192.168.1.23:5432//mavhealth?sslmode=disable")
+	if dbHost == "" || dbPort == "" || dbUser == "" || dbPass == "" || dbName == "" {
+		return nil, fmt.Errorf("database environment variables (DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME) must be set")
+	}
+
+	// Construct the connection string dynamically
+	connStr := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
+		dbUser, dbPass, dbHost, dbPort, dbName)
+
 	pool, err := pgxpool.New(ctx, connStr)
 	if err != nil {
 		return nil, err // Clean return of error
