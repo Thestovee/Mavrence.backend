@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -47,8 +48,9 @@ func (h *DbPool) CreateWordOfTheDay(c *gin.Context) {
 		})
 	}
 	ctx := c.Request.Context()
-
-	err := h.db.QueryRow(ctx, "insert into WordOfTheDay (word) values ($1);", req.Word)
+	var newID int
+	err := h.db.QueryRow(ctx, "insert into WordOfTheDay (word) values ($1) RETURNING id;", req.Word).Scan(&newID)
+	fmt.Println(newID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, APIResponse{
 			Success: false,

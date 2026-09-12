@@ -92,8 +92,8 @@ func (h *DbPool) CreateHealthData(c *gin.Context) {
 	ctx := c.Request.Context()
 
 	query := `
-        INSERT INTO MavHealth (date, mentalstate, physicalstate, note)
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO MavHealth (date, mentalstate, physicalstate)
+        VALUES ($1, $2, $3)
         RETURNING id;`
 
 	var newID int
