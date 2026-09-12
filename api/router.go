@@ -4,6 +4,7 @@ import (
 	"Mav_backend/api/handlers"
 	"Mav_backend/api/middleware"
 	"Mav_backend/database"
+
 	"github.com/gin-gonic/gin"
 )
 

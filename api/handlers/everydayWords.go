@@ -7,15 +7,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type wordOftheday struct {
-	id   int    `json:"id"`
-	word string `json:"word"`
+type WordOftheday struct {
+	ID   int    `json:"id"`
+	Word string `json:"word"`
 }
 
 func (h *DbPool) GetWordOfTheDay(c *gin.Context) {
 	ctx := c.Request.Context()
-	var req wordOftheday
-	err := h.db.QueryRow(ctx, "Select id, word from WordOfTheDay order by id desc limit 1").Scan(&req.id, &req.word)
+	var req WordOftheday
+	err := h.db.QueryRow(ctx, "Select id, word from WordOfTheDay order by id desc limit 1").Scan(&req.ID, &req.Word)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			c.JSON(http.StatusNotFound, gin.H{
@@ -38,7 +38,7 @@ func (h *DbPool) GetWordOfTheDay(c *gin.Context) {
 }
 
 func (h *DbPool) CreateWordOfTheDay(c *gin.Context) {
-	var req wordOftheday
+	var req WordOftheday
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   err.Error(),
@@ -48,7 +48,7 @@ func (h *DbPool) CreateWordOfTheDay(c *gin.Context) {
 	}
 	ctx := c.Request.Context()
 
-	err := h.db.QueryRow(ctx, "insert into WordOfTheDay (word) values ($1);", req.word)
+	err := h.db.QueryRow(ctx, "insert into WordOfTheDay (word) values ($1);", req.Word)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, APIResponse{
 			Success: false,
