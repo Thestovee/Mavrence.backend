@@ -4,6 +4,7 @@
 !.env.example
 *.pem
 *.key
+docker-compose.yml
 
 # Go build and test output
 backend/bin/
