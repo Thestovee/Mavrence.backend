@@ -33,7 +33,7 @@ func (h *DbPool) GetWordOfTheDay(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, APIResponse{
 		Success: true,
-		Data:    h,
+		Data:    req,
 	})
 }
 
@@ -59,6 +59,5 @@ func (h *DbPool) CreateWordOfTheDay(c *gin.Context) {
 	}
 	c.JSON(http.StatusCreated, APIResponse{
 		Success: true,
-		Data:    h,
 	})
 }

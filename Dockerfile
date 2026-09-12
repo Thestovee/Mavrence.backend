@@ -1,7 +1,7 @@
 
 # === STAGE 1: BUILDER ===
 # Use the official Go image to compile the application
-FROM golang:1.26-alpine AS builder
+FROM golang:1.27.1-alpine AS builder
 
 # Set necessary environment variables for CGO dependencies if needed, though often not required for pure Go
 ENV CGO_ENABLED=0
